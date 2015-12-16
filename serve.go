@@ -12,10 +12,6 @@ var pwd string
 var port string = ":8035"
 var dir string = "www"
 
-func serve(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "www/"+r.URL.Path[1:])
-}
-
 func parseargs() {
 	c := os.Args[1]
 	d := os.Args[2]
