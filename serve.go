@@ -30,7 +30,7 @@ func parseargs() {
 	} else if len(os.Args) == 1 {
 		a, _ := strconv.Atoi(c)
 		if a > 0 {
-			port = ":" + a
+			port = ":" + c
 		} else if a == 0 {
 			dir = c
 		}
