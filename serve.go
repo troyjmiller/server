@@ -12,22 +12,29 @@ var pwd string
 var port string = ":8035"
 var dir string = "www"
 
-func parseargs() {
-	c := os.Args[1]
-	d := os.Args[2]
-	if len(os.Args) > 1 {
+func parseArgs() {
+	if len(os.Args) > 2 {
+		c := os.Args[1]
+		d := os.Args[2]
 		a, _ := strconv.Atoi(c)
 		b, _ := strconv.Atoi(d)
 		if a > 0 {
 			port = ":" + c
+			if a == 0 {
+				dir = c
+			} else if b == 0 {
+				dir = d
+			}
 		} else if b > 0 {
 			port = ":" + d
-		} else if a == 0 {
-			dir = c
-		} else if b == 0 {
-			dir = d
+			if a == 0 {
+				dir = c
+			} else if b == 0 {
+				dir = d
+			}
 		}
-	} else if len(os.Args) == 1 {
+	} else if len(os.Args) == 2 {
+		c := os.Args[1]
 		a, _ := strconv.Atoi(c)
 		if a > 0 {
 			port = ":" + c
@@ -49,10 +56,6 @@ func main() {
 	wd, _ := os.Getwd()
 	parseArgs()
 	pwd = filepath.Join(wd, dir)
-
-	file := r.URL.Path
-	http.ServeFile(w, r, dir+"/"+file)
-	log.Print(r.Method, " ", file)
 
 	log.Printf("SERVE %s on %s ", pwd, port)
 
